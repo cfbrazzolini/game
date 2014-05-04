@@ -3,6 +3,10 @@
 GameBase* GameBase::instance = nullptr;
 
 GameBase::GameBase(const std::string& title, int width, int height){
+
+
+    srand(time(NULL));
+    
     if(instance != nullptr){
         throw "Erro! Ja foi criado instance, chame esse construtor somente 1 vez";
     }
