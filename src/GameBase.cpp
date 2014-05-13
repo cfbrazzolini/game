@@ -1,10 +1,11 @@
 #include "GameBase.h"
+#include <iostream>
 
 GameBase* GameBase::instance = nullptr;
 
 GameBase::GameBase(const std::string& title, int width, int height){
 
-
+    
     srand(time(NULL));
     
     if(instance != nullptr){
@@ -24,6 +25,7 @@ GameBase::GameBase(const std::string& title, int width, int height){
     if((renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED)) == nullptr){
         throw "nao criou renderer";
     }
+
 }
 
 GameBase::~GameBase(){

@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
+#include <unordered_map>
 
 #include "GameBase.h"
 
@@ -20,7 +21,10 @@ public:
     int getWidth();
     int getHeight();
     bool isOpen();
+    static void clear();
+
 private:
+    static std::unordered_map<std::string, SDL_Texture*> assetTable;
     SDL_Texture* texture;
     SDL_Rect dimensions;
 protected:
