@@ -20,7 +20,6 @@ private:
     void update();
     void render();
     void addObject(float,float);
-    void buildMap();
 
     Sprite bg;
     MultiTileSet tileSet;

@@ -19,8 +19,53 @@ TileMap::TileMap(const std::string& file,TileSet* tileSet){
     load(file);
 }
 
-void TileMap::load(const std::string& file){
+void TileMap::load(const std::string& file_name){
 
+    std::ifstream file (file_name);
+    std::string str;
+    int i,j,k;
+
+    
+    if(file.is_open()){
+
+        getline(file,str,',');
+        this->mapWidth = strtol(str.c_str(),nullptr,10);
+        getline(file,str,',');
+        this->mapHeight = strtol(str.c_str(),nullptr,10);
+        getline(file,str,',');
+        this->mapDepth = strtol(str.c_str(),nullptr,10);
+
+        tileMatrix.assign(mapWidth*mapHeight*mapDepth, -1);
+
+        i = 0;
+        j = 0;
+        k = 0;
+
+        while(getline(file,str,',')){
+
+            at(i,j,k) = strtol(str.c_str(),nullptr,10) - 1;
+
+            i++;
+
+            if(i == mapWidth){
+                i = 0;
+                j++;
+            }
+
+            if(j == mapHeight){
+                j = 0;
+                k++;
+            }
+
+            if(k == mapDepth){
+                break;
+            }
+        }
+    }else{
+        throw "Arquivo nao encontrado";
+    }
+
+    file.close();
 }
 
 void TileMap::setTileSet(TileSet* tileSet){
