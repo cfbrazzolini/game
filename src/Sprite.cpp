@@ -59,7 +59,6 @@ void Sprite::render(int x, int y,float angle){
     dstRect.w = clipRect.w*scaleX;
     dstRect.h = clipRect.h*scaleY;
 
-    //angle = CustomMath::RadToDeg(angle);
     SDL_RenderCopyEx(GameBase::getInstance().getRenderer(), texture, &clipRect, &dstRect,angle,NULL,SDL_FLIP_NONE);
 }
 

@@ -84,3 +84,8 @@ int GameBase::getWindowHeight(){
     SDL_GetWindowSize(window, &w, &h);
     return h;
 }
+
+
+void GameBase::addObject(GameObject* ptr){
+    objectArray.emplace_back(ptr);
+}

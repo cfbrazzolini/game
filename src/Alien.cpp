@@ -8,7 +8,7 @@ Alien::Alien(float x,float y,int nMinions) : sp("img/alien.png"){
 
     hp = ALIEN_HP;
     rotation = 0;
-    sp.setScale(0.5);
+    //sp.setScale(0.5);
 
     box.setX(x - sp.getWidth()/2);
 	box.setY(y - sp.getHeight()/2);
@@ -27,7 +27,8 @@ void Alien::update(float dt){
 
 	auto& input = InputManager::getInstance();
 	Point pos,click;
-	int i;
+	int i,closest = 0;
+    float distance = std::numeric_limits<float>::max();
 
 	rotation -= 3;
 
@@ -36,6 +37,23 @@ void Alien::update(float dt){
 		click.setY(input.getMouseY() + Camera::pos.getY());
 
 		taskQueue.push(click);
+	}
+
+	if(input.mousePress(LEFT_MOUSE_BUTTON)){
+
+        click.setX((float)input.getMouseX() + Camera::pos.getX());
+        click.setY((float)input.getMouseY() + Camera::pos.getY());
+
+        
+        for(i=0;i<minionArray.size();i++){
+            if(distance > minionArray[i].box.getCenter().computeDistance(click)){
+                distance = minionArray[i].box.getCenter().computeDistance(click);
+                closest = i;
+            }
+        }
+
+        minionArray[closest].shoot(click.getX(),click.getY());
+
 	}
 
 	if(!taskQueue.empty()){

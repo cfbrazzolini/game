@@ -2,7 +2,7 @@
 
 Minion::Minion(GameObject* minionCenter, float angleOffset) : sp("img/minion.png"),center(minionCenter),angle(angleOffset){
 
-	sp.setScale(0.5);
+	//sp.setScale(0.5);
 	rotation = -1*(90 - fmod(CustomMath::RadToDeg(angle),90));
 	
 	box.setX(center->box.getCenter().getX() + RADIUS*cos(angle) - sp.getWidth()/2);
@@ -32,5 +32,16 @@ bool Minion::isDead(){
 }
 
 void Minion::shoot(float x,float y){
-	
+
+	float angle;
+	Point target;
+	auto &game = GameBase::getInstance();
+
+    target.setX(x - box.getCenter().getX());
+    target.setY(y - box.getCenter().getY());
+
+    angle = target.vectorInclination();
+
+    Bullet* bullet = new Bullet(box.getCenter().getX(),box.getCenter().getY(),angle,100,500,"img/minionbullet.png");
+    game.addObject(bullet);
 }

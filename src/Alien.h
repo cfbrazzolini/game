@@ -2,6 +2,7 @@
 #define ALIEN_H
 
 #include <cmath>
+#include <limits>
 #include <queue>
 #include <vector>
 

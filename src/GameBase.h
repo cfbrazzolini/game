@@ -20,6 +20,7 @@ public:
     float getDeltaTime();
     int getWindowWidth();
     int getWindowHeight();
+    virtual void addObject(GameObject*);
 protected:
     GameBase(const std::string&, int, int);
     virtual ~GameBase();
