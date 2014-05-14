@@ -38,7 +38,9 @@ GameBase::~GameBase(){
 
 void GameBase::run(){
     shouldQuit = false;
+    InputManager::getInstance().update();
     while(!shouldQuit){
+        InputManager::getInstance().update();
         update();
         render();
         SDL_RenderPresent(renderer);

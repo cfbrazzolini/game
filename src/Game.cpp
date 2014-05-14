@@ -33,44 +33,30 @@ Game::~Game(){
 
 void Game::input() {
 
-    SDL_Event event;
-    int mouseX, mouseY;
+    auto &input = InputManager::getInstance();
+    int mouseX = InputManager::getInstance().getMouseX();
+    int mouseY = InputManager::getInstance().getMouseY();
 
-    // Obtenha as coordenadas do mouse
-    SDL_GetMouseState(&mouseX, &mouseY);
 
-    // SDL_PollEvent retorna 1 se encontrar eventos, zero caso contrário
-    while (SDL_PollEvent(&event)) {
+    if(input.keyPress(ESCAPE_KEY) || input.shouldQuit()){
+        shouldQuit = true;
+    }
 
-        // Se o evento for quit, setar a flag para terminação
-        if(event.type == SDL_QUIT) {
-            shouldQuit = true;
-        }
-       
-        // Se o evento for clique...
-        if(event.type == SDL_MOUSEBUTTONDOWN) {
+    if(input.keyPress(SPACE_KEY)){
 
-            // Percorrer de trás pra frente pra sempre clicar no objeto mais de cima
-            for(int i = objectArray.size() - 1; i >= 0; --i) {
-                // Obtem o ponteiro e casta pra Face (é provisório, isso é má prática)
-                Face* face = (Face*) objectArray[i].get();
+        addObject((float)mouseX, (float)mouseY);
+    }
 
-                if(face->box.isInside((float)mouseX, (float)mouseY)) {
-                    // Aplica dano
-                    face->damage(rand() % 10 + 10);
-                    // Sai do loop (só queremos acertar um)
-                    break;
-                }
-            }
-        }
-        if( event.type == SDL_KEYDOWN ) {
-            // Se a tecla for ESC, setar a flag de quit
-            if( event.key.keysym.sym == SDLK_ESCAPE ) {
-                shouldQuit = true;
-            }
-            // Se não, crie um objeto
-            else {
-                addObject((float)mouseX, (float)mouseY);
+    if (input.isKeyDown(X_KEY)) {
+        objectArray.clear();
+    }
+
+    if(input.mousePress(LEFT_MOUSE_BUTTON)){
+        for(int i = objectArray.size() - 1; i >= 0; --i) {
+             Face* face = (Face*) objectArray[i].get();
+             if(face->box.isInside((float)mouseX, (float)mouseY)) {
+                face->damage(rand() % 10 + 10);
+                break;
             }
         }
     }

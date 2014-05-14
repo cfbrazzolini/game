@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "GameObject.h"
+#include "InputManager.h"
 
 
 class GameBase{
