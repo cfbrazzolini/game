@@ -3,20 +3,20 @@
 Alien::Alien(float x,float y,int nMinions) : sp("img/alien.png"){
 
 	int i;
+    float angle;
 	Point click;
 
     hp = ALIEN_HP;
 
-
-	box.setX(x - sp.getWidth()/2);
+    box.setX(x - sp.getWidth()/2);
 	box.setY(y - sp.getHeight()/2);
 	box.setW(sp.getWidth());
 	box.setH(sp.getHeight());
 
-	/*for(i=0;i<nMinions;i++){
-		angle = i*2*PI/nMinions;
+	for(i=0;i<nMinions;i++){
+		angle = CustomMath::DegToRad(i * 360/nMinions);
 		minionArray.emplace_back(this,angle);
-	}*/
+	}
 }
 
 void Alien::update(float dt){
@@ -45,9 +45,9 @@ void Alien::update(float dt){
 		}
 	}
 
-	/*for(i=0;i<minionArray.size();i++){
-		minionArray[i].update();
-	}*/
+	for(i=0;i<minionArray.size();i++){
+        minionArray[i].update(dt);
+	}
 
 }
 
@@ -56,9 +56,9 @@ void Alien::render(){
 	int i;
 
 	sp.render(box.getX() - Camera::pos.getX(),box.getY() - Camera::pos.getY());
-	/*for(i=0;i<minionArray.size();i++){
+	for(i=0;i<minionArray.size();i++){
 		minionArray[i].render();
-	}*/
+	}
 }
 
 bool Alien::isDead(){

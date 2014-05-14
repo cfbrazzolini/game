@@ -4,7 +4,9 @@
 
 Game::Game() : GameBase("IDJ - Caina 09/0108094", 1024, 600), bg("img/ocean.jpg"),tileSet(64,64,"img/tileset.png"),tileMap("map/tileMap.txt",&tileSet) {
 
-   objectArray.emplace_back(new Alien(512,300,0));
+    Alien* alien = new Alien(512,300,4);
+    Camera::follow(alien);
+    objectArray.emplace_back(alien);
 }
 
 Game::~Game(){

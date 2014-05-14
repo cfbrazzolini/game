@@ -1,10 +1,12 @@
 #ifndef ALIEN_H
 #define ALIEN_H
 
+#include <cmath>
 #include <queue>
 #include <vector>
 
 #include "Camera.h"
+#include "CustomMath.h"
 #include "GameObject.h"
 #include "InputManager.h"
 #include "Minion.h"

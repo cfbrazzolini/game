@@ -5,7 +5,7 @@ GameBase* GameBase::instance = nullptr;
 
 GameBase::GameBase(const std::string& title, int width, int height){
 
-    
+    frameStart = 0;
     srand(time(NULL));
     
     if(instance != nullptr){
