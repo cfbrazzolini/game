@@ -3,11 +3,11 @@
 
 #include <fstream>
 
+#include "BlockTileSet.h"
 #include "Camera.h"
 #include "CustomMath.h"
 #include "Face.h"
 #include "GameBase.h"
-#include "MultiTileSet.h"
 #include "Sprite.h"
 #include "TileMap.h"
 
@@ -22,7 +22,7 @@ private:
     void addObject(float,float);
 
     Sprite bg;
-    MultiTileSet tileSet;
+    BlockTileSet tileSet;
     TileMap tileMap;
 };
 

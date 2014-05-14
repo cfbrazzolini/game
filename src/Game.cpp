@@ -1,26 +1,9 @@
 #include "Game.h"
-#include <iostream>
-
-
-Game::Game() : GameBase("IDJ - Caina 09/0108094", 1024, 600), bg("img/ocean.jpg"),tileSet(64,64),tileMap("map/tileMap.txt",&tileSet) {
-
-    std::ifstream file ("img/tileset/tilelist.txt");
-    std::string str;
-
-
-    if(file.is_open()){
-        while(getline(file,str)){
-            tileSet.open("img/tileset/" + str);
-        }
-    }else{
-
-        throw "Arquivo nao encontrado";
-        
-    }
 
 
 
-    file.close();
+Game::Game() : GameBase("IDJ - Caina 09/0108094", 1024, 600), bg("img/ocean.jpg"),tileSet(64,64,"img/tileset.png"),tileMap("map/tileMap.txt",&tileSet) {
+
 }
 
 Game::~Game(){
