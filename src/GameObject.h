@@ -12,6 +12,7 @@ public:
     virtual bool isDead() = 0;
 
     Rect box;
+    float rotation;
 };
 
 #endif // GAMEOBJECT_H

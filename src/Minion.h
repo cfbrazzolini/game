@@ -5,6 +5,7 @@
 
 #include "Bullet.h"
 #include "Camera.h"
+#include "CustomMath.h"
 #include "GameObject.h"
 #include "Sprite.h"
 

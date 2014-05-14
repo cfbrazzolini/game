@@ -5,10 +5,14 @@ std::unordered_map<std::string,SDL_Texture*> Sprite::assetTable;
 
 Sprite::Sprite(){
     texture = nullptr;
+    scaleX = 1;
+    scaleY = 1;
 }
 
 Sprite::Sprite(const std::string& file){
     texture = nullptr;
+    scaleX = 1;
+    scaleY = 1;
     open(file);
 }
 
@@ -42,7 +46,7 @@ void Sprite::setClip(int x, int y, int w, int h){
     clipRect.h = h;
 }
 
-void Sprite::render(int x, int y){
+void Sprite::render(int x, int y,float angle){
 
     if(!isOpen()){
         return;
@@ -52,18 +56,19 @@ void Sprite::render(int x, int y){
     dstRect = dimensions;
     dstRect.x = x;
     dstRect.y = y;
-    dstRect.w = clipRect.w;
-    dstRect.h = clipRect.h;
+    dstRect.w = clipRect.w*scaleX;
+    dstRect.h = clipRect.h*scaleY;
 
-    SDL_RenderCopy(GameBase::getInstance().getRenderer(), texture, &clipRect, &dstRect);
+    //angle = CustomMath::RadToDeg(angle);
+    SDL_RenderCopyEx(GameBase::getInstance().getRenderer(), texture, &clipRect, &dstRect,angle,NULL,SDL_FLIP_NONE);
 }
 
 int Sprite::getWidth(){
-    return dimensions.w;
+    return dimensions.w*scaleX;
 }
 
 int Sprite::getHeight(){
-    return dimensions.h;
+    return dimensions.h*scaleY;
 }
 
 bool Sprite::isOpen(){
@@ -80,4 +85,19 @@ void Sprite::clear(){
     assetTable.clear();
 }
 
+
+void Sprite::setScaleX(float scale){
+    scaleX = scale;
+}
+
+void Sprite::setScaleY(float scale){
+    scaleY = scale;
+}
+
+void Sprite::setScale(float scale){
+
+    scaleX = scale;
+    scaleY = scale;
+
+}
 

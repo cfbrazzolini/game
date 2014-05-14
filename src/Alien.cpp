@@ -7,11 +7,15 @@ Alien::Alien(float x,float y,int nMinions) : sp("img/alien.png"){
 	Point click;
 
     hp = ALIEN_HP;
+    rotation = 0;
+    sp.setScale(0.5);
 
     box.setX(x - sp.getWidth()/2);
 	box.setY(y - sp.getHeight()/2);
 	box.setW(sp.getWidth());
 	box.setH(sp.getHeight());
+
+
 
 	for(i=0;i<nMinions;i++){
 		angle = CustomMath::DegToRad(i * 360/nMinions);
@@ -24,6 +28,8 @@ void Alien::update(float dt){
 	auto& input = InputManager::getInstance();
 	Point pos,click;
 	int i;
+
+	rotation -= 3;
 
 	if(input.mousePress(RIGHT_MOUSE_BUTTON)){
 		click.setX(input.getMouseX() + Camera::pos.getX());
@@ -55,7 +61,7 @@ void Alien::update(float dt){
 void Alien::render(){
 	int i;
 
-	sp.render(box.getX() - Camera::pos.getX(),box.getY() - Camera::pos.getY());
+	sp.render(box.getX() - Camera::pos.getX(),box.getY() - Camera::pos.getY(),rotation);
 	for(i=0;i<minionArray.size();i++){
 		minionArray[i].render();
 	}
