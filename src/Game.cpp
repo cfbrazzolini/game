@@ -4,6 +4,7 @@
 
 Game::Game() : GameBase("IDJ - Caina 09/0108094", 1024, 600), bg("img/ocean.jpg"),tileSet(64,64,"img/tileset.png"),tileMap("map/tileMap.txt",&tileSet) {
 
+   objectArray.emplace_back(new Alien(512,300,0));
 }
 
 Game::~Game(){
@@ -47,6 +48,10 @@ void Game::update(){
                 break;
             }
         }
+    }
+
+    for(i=0;i<objectArray.size();i++){
+            objectArray[i]->update(dt);
     }
 
     

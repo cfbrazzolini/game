@@ -3,6 +3,7 @@
 
 #include <fstream>
 
+#include "Alien.h"
 #include "BlockTileSet.h"
 #include "Camera.h"
 #include "CustomMath.h"
