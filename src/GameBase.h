@@ -17,6 +17,9 @@ public:
     void run();
     SDL_Renderer* getRenderer();
     static GameBase& getInstance();
+    float getDeltaTime();
+    int getWindowWidth();
+    int getWindowHeight();
 protected:
     GameBase(const std::string&, int, int);
     virtual ~GameBase();
@@ -26,9 +29,13 @@ protected:
 
     std::vector<std::unique_ptr<GameObject>> objectArray;
 private:
+    void calculateDeltaTime();
     static GameBase* instance;
     SDL_Window* window;
     SDL_Renderer* renderer;
+    int frameStart;
+    float dt;
+    
 
 };
 

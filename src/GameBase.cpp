@@ -40,6 +40,7 @@ void GameBase::run(){
     shouldQuit = false;
     InputManager::getInstance().update();
     while(!shouldQuit){
+        calculateDeltaTime();
         InputManager::getInstance().update();
         update();
         render();
@@ -56,4 +57,30 @@ GameBase& GameBase::getInstance(){
     return *instance;
 }
 
+void GameBase::calculateDeltaTime(){
+    int ticks = SDL_GetTicks();
+    dt = (float)(ticks - frameStart)/1000;
+    frameStart = ticks;
+}
 
+
+float GameBase::getDeltaTime(){
+    return dt;
+}
+
+
+int GameBase::getWindowWidth(){
+
+    int w, h;
+
+    SDL_GetWindowSize(window, &w, &h);
+    return w;
+}
+
+int GameBase::getWindowHeight(){
+
+    int w, h;
+    
+    SDL_GetWindowSize(window, &w, &h);
+    return h;
+}

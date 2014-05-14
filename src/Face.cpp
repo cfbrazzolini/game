@@ -20,7 +20,7 @@ void Face::update(float dt){
 
 void Face::render(){
 
-    sp.render(box.getX(),box.getY());
+    sp.render(box.getX() - Camera::pos.getX(),box.getY() - Camera::pos.getY());
 }
 
 bool Face::isDead(){

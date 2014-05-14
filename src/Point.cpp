@@ -103,7 +103,7 @@ Point Point::vectorNegate(){
 Point Point::vectorNormalize(){
 
     Point result;
-    float magnitude;
+    float magnitude = vectorMagnitude();
 
     result.x = x/magnitude;
     result.y = y/magnitude;

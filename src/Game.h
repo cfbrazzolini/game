@@ -3,6 +3,7 @@
 
 #include <fstream>
 
+#include "Camera.h"
 #include "CustomMath.h"
 #include "Face.h"
 #include "GameBase.h"

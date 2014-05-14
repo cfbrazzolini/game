@@ -1,8 +1,10 @@
 #ifndef FACE_H
 #define FACE_H
 
+#include "Camera.h"
 #include "GameObject.h"
 #include "Sprite.h"
+
 
 class Face : public GameObject
 {

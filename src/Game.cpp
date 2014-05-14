@@ -32,19 +32,26 @@ Game::~Game(){
 
 
 void Game::input() {
+    
+}
 
+void Game::update(){
+
+    int i;
     auto &input = InputManager::getInstance();
     int mouseX = InputManager::getInstance().getMouseX();
     int mouseY = InputManager::getInstance().getMouseY();
+    float dt = GameBase::getDeltaTime();
 
-
+    Camera::update(dt);
+    
     if(input.keyPress(ESCAPE_KEY) || input.shouldQuit()){
         shouldQuit = true;
     }
 
     if(input.keyPress(SPACE_KEY)){
 
-        addObject((float)mouseX, (float)mouseY);
+        addObject((float)mouseX + Camera::pos.getX(), (float)mouseY + Camera::pos.getY());
     }
 
     if (input.isKeyDown(X_KEY)) {
@@ -54,24 +61,14 @@ void Game::input() {
     if(input.mousePress(LEFT_MOUSE_BUTTON)){
         for(int i = objectArray.size() - 1; i >= 0; --i) {
              Face* face = (Face*) objectArray[i].get();
-             if(face->box.isInside((float)mouseX, (float)mouseY)) {
+             if(face->box.isInside((float)mouseX + Camera::pos.getX(), (float)mouseY + Camera::pos.getY())) {
                 face->damage(rand() % 10 + 10);
                 break;
             }
         }
     }
-}
 
-void Game::update(){
-
-    int i;
     
-    if (SDL_QuitRequested()) {
-        shouldQuit = true;
-    }
-
-
-    input();
 
     for(i=0;i<objectArray.size();i++){
         if(objectArray[i]->isDead()){
@@ -88,7 +85,7 @@ void Game::render(){
 
 
     bg.render(0,0);
-    tileMap.render(0,0);
+    tileMap.render(Camera::pos.getX(),Camera::pos.getY());
 
     for(i=0;i<objectArray.size();i++){
         objectArray[i]->render();
