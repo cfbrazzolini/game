@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-Bullet::Bullet(float x,float y,float angle,float speed,float maxDistance,const std::string& sprite) : sp(sprite){
+Bullet::Bullet(float x,float y,float angle,float speed,float maxDistance,const std::string& sprite) : sp(sprite,3,0.2){
 
 	box.setX(x - sp.getWidth()/2);
     box.setY(y - sp.getHeight()/2);
@@ -16,8 +16,8 @@ Bullet::Bullet(float x,float y,float angle,float speed,float maxDistance,const s
 
 void Bullet::update(float dt){
 	box.sumPoint(speed.vectorXScalar(dt));
-
     distanceLeft -= speed.vectorXScalar(dt).vectorMagnitude();
+    sp.update(dt);
 }
 
 void Bullet::render(){

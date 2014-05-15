@@ -7,12 +7,21 @@ Sprite::Sprite(){
     texture = nullptr;
     scaleX = 1;
     scaleY = 1;
+    frameTime = 1;
+    frameCount = 1;
+    currentFrame = 0;
+    timeElapsed = 0;
 }
 
-Sprite::Sprite(const std::string& file){
+Sprite::Sprite(const std::string& file, int frameCount,float frameTime){
     texture = nullptr;
     scaleX = 1;
     scaleY = 1;
+
+    this->frameTime = frameTime;
+    this->frameCount = frameCount;
+    currentFrame = 0;
+    timeElapsed = 0;
     open(file);
 }
 
@@ -36,7 +45,7 @@ void Sprite::open(const std::string& file){
     }
    
     SDL_QueryTexture(texture, nullptr, nullptr, &dimensions.w, &dimensions.h);
-    setClip(0,0, dimensions.w, dimensions.h);
+    setClip(0,0, dimensions.w/frameCount, dimensions.h);
 }
 
 void Sprite::setClip(int x, int y, int w, int h){
@@ -44,6 +53,17 @@ void Sprite::setClip(int x, int y, int w, int h){
     clipRect.y = y;
     clipRect.w = w;
     clipRect.h = h;
+}
+
+
+void Sprite::update(float dt){
+
+    timeElapsed += dt;
+    if(timeElapsed >= frameTime){
+        timeElapsed = 0;
+        currentFrame = (++currentFrame) % frameCount;
+        setClip(currentFrame*(dimensions.w/frameCount),clipRect.y,clipRect.w,clipRect.h);
+    }
 }
 
 void Sprite::render(int x, int y,float angle){
@@ -63,7 +83,7 @@ void Sprite::render(int x, int y,float angle){
 }
 
 int Sprite::getWidth(){
-    return dimensions.w*scaleX;
+    return dimensions.w/frameCount * scaleX;
 }
 
 int Sprite::getHeight(){
@@ -98,5 +118,19 @@ void Sprite::setScale(float scale){
     scaleX = scale;
     scaleY = scale;
 
+}
+
+void Sprite::setFrame(int frame){
+
+    currentFrame = frame % frameCount;
+    setClip(currentFrame*(dimensions.w/frameCount),clipRect.y,clipRect.w,clipRect.h);
+}
+
+void Sprite::setFrameCount(int frameCount){
+    this->frameCount = frameCount;
+}
+
+void Sprite::setFrameTime(float frameTime){
+    this->frameTime = frameTime;
 }
 

@@ -23,7 +23,7 @@ void BlockTileSet::render(unsigned index,float x,float y){
         int tileX = tileWidth  * (index % columns);
         int tileY = tileHeight * (index / columns);
 
-        //clipamos o tile e o renderizamos
+
         tileSet.setClip(tileX, tileY, tileWidth, tileHeight);
         tileSet.render(x, y);
     }
