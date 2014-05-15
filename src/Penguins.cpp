@@ -27,13 +27,22 @@ void Penguins::update(float dt){
 	auto& input = InputManager::getInstance();
 	Point click;
 
+
     click.setX((float)input.getMouseX() + Camera::pos.getX());
     click.setY((float)input.getMouseY() + Camera::pos.getY());
 
     cannonAngle = box.getCenter().computeInclination(click);
 
-    if(input.mousePress(SDL_BUTTON_LEFT)){
-    	shoot();
+ 	if(timer.getTime() > 0 && timer.getTime() < PENGUINS_SHOOT_COOLDOWN){
+        timer.update(dt);
+        if(timer.getTime() >= PENGUINS_SHOOT_COOLDOWN){
+            timer.restart();
+        }
+    }
+
+    if(timer.getTime() == 0 && input.mousePress(SDL_BUTTON_LEFT)){
+        shoot();
+        timer.update(dt);
     }
 
 

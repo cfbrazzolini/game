@@ -9,6 +9,7 @@
 #include "InputManager.h"
 #include "Point.h"
 #include "Sprite.h"
+#include "Timer.h"
 
 #define ACCELARATION 100
 #define COOLDOWN 1
@@ -17,6 +18,7 @@
 #define PENGUINS_BULLET_FRAME_TIME 0.2
 #define PENGUINS_BULLET_RANGE 500
 #define PENGUINS_BULLET_SPEED 100
+#define PENGUINS_SHOOT_COOLDOWN 0.5
 #define ROTATION_ANGLE 5
 #define UPPER_SPEED_LIMIT 500
 
@@ -41,6 +43,7 @@ private:
 	float linearSpeed;
 	float cannonAngle;
 	int hp;
+    Timer timer;
 };
 
 #endif // PENGUINS_H
