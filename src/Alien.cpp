@@ -18,7 +18,7 @@ Alien::Alien(float x,float y,int nMinions) : sp("img/alien.png"){
 
 
 	for(i=0;i<nMinions;i++){
-		angle = CustomMath::DegToRad(i * 360/nMinions);
+		angle = CustomMath::degToRad(i * 360/nMinions);
 		minionArray.emplace_back(this,angle);
 	}
 }
@@ -91,4 +91,16 @@ bool Alien::isDead(){
 
 Alien::~Alien(){
 	
+}
+
+void Alien::notifyCollision(GameObject& other){
+
+	if(other.is("Bullet") && ((Bullet&)other).getShooter() == "Penguins"){
+		hp -= 10;
+	}
+
+}
+
+bool Alien::is(const std::string& type){
+	return type == "Alien";
 }

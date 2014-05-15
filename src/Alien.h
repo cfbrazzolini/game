@@ -6,6 +6,7 @@
 #include <queue>
 #include <vector>
 
+#include "Bullet.h"
 #include "Camera.h"
 #include "CustomMath.h"
 #include "GameObject.h"
@@ -14,7 +15,7 @@
 #include "Point.h"
 #include "Sprite.h"
 
-#define ALIEN_HP 30
+#define ALIEN_HP 50
 #define ALIEN_SPEED 100
 
 class Alien : public GameObject
@@ -25,6 +26,8 @@ public:
 	void update(float);
 	void render();
 	bool isDead();
+	void notifyCollision(GameObject&);
+	bool is(const std::string&);
 private:
 	Sprite sp;
 	Point speed;

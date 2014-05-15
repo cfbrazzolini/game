@@ -3,7 +3,7 @@
 Minion::Minion(GameObject* minionCenter, float angleOffset) : sp("img/minion.png"),center(minionCenter),angle(angleOffset){
 
 	//sp.setScale(0.5);
-	rotation = -1*(90 - fmod(CustomMath::RadToDeg(angle),90));
+	rotation = -1*(90 - fmod(CustomMath::radToDeg(angle),90));
 	
 	box.setX(center->box.getCenter().getX() + RADIUS*cos(angle) - sp.getWidth()/2);
 	box.setY(center->box.getCenter().getY() + RADIUS*sin(angle)  - sp.getHeight()/2);
@@ -17,7 +17,7 @@ Minion::Minion(GameObject* minionCenter, float angleOffset) : sp("img/minion.png
 void Minion::update(float dt){
 
 	angle += ANGULAR_SPEED * dt;
-	rotation = -1*(90 - fmod(CustomMath::RadToDeg(angle),90));
+	rotation = -1*(90 - fmod(CustomMath::radToDeg(angle),90));
 	
 	box.setX(center->box.getCenter().getX() + RADIUS*cos(angle) - sp.getWidth()/2);
 	box.setY(center->box.getCenter().getY() + RADIUS*sin(angle)  - sp.getHeight()/2);
@@ -34,7 +34,8 @@ bool Minion::isDead(){
 void Minion::shoot(float x,float y){
 
 	float angle;
-	Point target;
+	int radius = 40;
+	Point target,bullet_origin;
 	auto &game = GameBase::getInstance();
 
     target.setX(x - box.getCenter().getX());
@@ -42,6 +43,17 @@ void Minion::shoot(float x,float y){
 
     angle = target.vectorInclination();
 
-    Bullet* bullet = new Bullet(box.getCenter().getX(),box.getCenter().getY(),angle,100,500,"img/minionbullet.png");
+    bullet_origin.setX(box.getCenter().getX() + radius*cos(angle));
+    bullet_origin.setY(box.getCenter().getY() + radius*sin(angle));
+
+    Bullet* bullet = new Bullet(bullet_origin.getX(),bullet_origin.getY(),angle,MINION_BULLET_SPEED,MINION_BULLET_RANGE,"img/minionbullet.png",MINION_BULLET_FRAME_COUNT,MINION_BULLET_FRAME_TIME,"Minion");
     game.addObject(bullet);
+}
+
+void Minion::notifyCollision(GameObject& other){
+	
+}
+
+bool Minion::is(const std::string& type){
+	return type == "Minion";
 }

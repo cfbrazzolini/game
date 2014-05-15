@@ -1,14 +1,13 @@
 #ifndef CUSTOMMATH_H
 #define CUSTOMMATH_H
 
+#define PI 3.14159
+
 class CustomMath
 {
-private:
 public:
-    static constexpr float PI = 3.1415;
-    CustomMath();
-    static float DegToRad (float);          //converte um valor de graus para raidanos
-    static float RadToDeg (float);          //converte um valor de radianos para graus
+    static float degToRad (float);      
+    static float radToDeg (float);
 };
 
 #endif // CUSTOMMATH_H

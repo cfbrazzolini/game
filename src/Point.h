@@ -13,8 +13,8 @@ public:
     Point(float,float);
     void setX(float);
     void setY(float);
-    float getX();
-    float getY();
+    float getX() const;
+    float getY() const;
     float computeDistance(Point);
     Point sum(Point);
     Point sub(Point);
@@ -27,6 +27,19 @@ public:
     Point vectorNormalize();
     Point vectorProjX();
     Point vectorProjY();
+
+Point operator+(const Point& rhs) const {
+   return Point(x + rhs.x, y + rhs.getY());
+}
+
+Point operator-(const Point& rhs) const {
+   return Point(x - rhs.x, y - rhs.getY());
+}
+
+Point operator*(const float rhs) const {
+   return Point(x * rhs, y * rhs);
+}
+
 private:
 	float x;
 	float y;

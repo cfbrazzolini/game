@@ -1,13 +1,9 @@
 #include "CustomMath.h"
 
-CustomMath::CustomMath()
-{
+float CustomMath::degToRad(float alpha) {
+    return alpha*PI/180;
 }
 
-float CustomMath::DegToRad(float theta) {
-    return theta*PI/180;
-}
-
-float CustomMath::RadToDeg(float theta) {
-    return theta*180/PI;
+float CustomMath::radToDeg(float alpha) {
+    return alpha*180/PI;
 }

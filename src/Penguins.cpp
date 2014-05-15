@@ -76,5 +76,22 @@ bool Penguins::isDead(){
 }
 
 void Penguins::shoot(){
-    GameBase::getInstance().addObject(new Bullet(box.getCenter().getX(),box.getCenter().getY(),cannonAngle,PENGUINS_BULLET_SPEED,PENGUINS_BULLET_RANGE,"img/penguinshot.png",PENGUINS_BULLET_FRAME_COUNT,PENGUINS_BULLET_FRAME_TIME));
+    int radius = 60;
+	Point bullet_origin(box.getCenter().getX() + radius*cos(cannonAngle),box.getCenter().getY() + radius*sin(cannonAngle));
+    GameBase::getInstance().addObject(new Bullet(bullet_origin.getX(),bullet_origin.getY(),cannonAngle,PENGUINS_BULLET_SPEED,PENGUINS_BULLET_RANGE,"img/penguinshot.png",PENGUINS_BULLET_FRAME_COUNT,PENGUINS_BULLET_FRAME_TIME,"Penguins"));
+}
+
+
+void Penguins::notifyCollision(GameObject& other){
+
+	if(other.is("Bullet") && ((Bullet&)other).getShooter() == "Minion"){
+		hp -= 10;
+	}
+	else if(other.is("Alien")){
+		hp = 0;
+	}
+}
+
+bool Penguins::is(const std::string& type){
+	return type == "Penguins";
 }

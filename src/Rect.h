@@ -12,11 +12,11 @@ public:
     void setY(float);
     void setW(float);
     void setH(float);
-    float getX();
-    float getY();
-    float getW();
-    float getH();
-    Point getCenter();
+    float getX() const;
+    float getY() const;
+    float getW() const;
+    float getH() const;
+    Point getCenter() const;
     void sumPoint(Point);
     float computeDistance(Rect);
     bool hasPoint(Point);

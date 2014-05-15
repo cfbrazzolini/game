@@ -10,6 +10,10 @@
 #include "Sprite.h"
 
 #define ANGULAR_SPEED M_PI/3
+#define MINION_BULLET_FRAME_COUNT 3
+#define MINION_BULLET_FRAME_TIME 0.2
+#define MINION_BULLET_RANGE 500
+#define MINION_BULLET_SPEED 100
 #define RADIUS 150
 
 class Minion : public GameObject
@@ -20,6 +24,8 @@ public:
     void render();
     bool isDead();
     void shoot(float,float);
+    void notifyCollision(GameObject&);
+    bool is(const std::string&);
 private:
 	GameObject* center;
 	Sprite sp;

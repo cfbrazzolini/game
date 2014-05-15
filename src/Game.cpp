@@ -4,9 +4,13 @@
 
 Game::Game() : GameBase("IDJ - Caina 09/0108094", 1024, 600), bg("img/ocean.jpg"),tileSet(64,64,"img/tileset.png"),tileMap("map/tileMap.txt",&tileSet) {
 
-    Alien* alien = new Alien(512,300,4);
-    Camera::follow(alien);
-    objectArray.emplace_back(alien);
+    Penguins* penguin = new Penguins(512,600);
+
+
+    Camera::follow(penguin);
+
+    objectArray.emplace_back(new Alien(512,300,4));
+    objectArray.emplace_back(penguin);
 }
 
 Game::~Game(){
@@ -21,11 +25,15 @@ void Game::input() {
 
 void Game::update(){
 
-    int i;
+    int i,j;
     auto &input = InputManager::getInstance();
     int mouseX = InputManager::getInstance().getMouseX();
     int mouseY = InputManager::getInstance().getMouseY();
     float dt = GameBase::getDeltaTime();
+
+    if(Penguins::player == nullptr){
+        Camera::unfollow();
+    }
 
     Camera::update(dt);
     
@@ -42,18 +50,18 @@ void Game::update(){
         objectArray.clear();
     }
 
-    if(input.mousePress(LEFT_MOUSE_BUTTON)){
-        for(int i = objectArray.size() - 1; i >= 0; --i) {
-             Face* face = (Face*) objectArray[i].get();
-             if(face->box.isInside((float)mouseX + Camera::pos.getX(), (float)mouseY + Camera::pos.getY())) {
-                face->damage(rand() % 10 + 10);
-                break;
-            }
-        }
-    }
 
     for(i=0;i<objectArray.size();i++){
             objectArray[i]->update(dt);
+    }
+
+    for(i = 0; i < objectArray.size(); i++) {
+       for (j = i; j < objectArray.size(); j++)       {
+            if(Collision::IsColliding(objectArray[i]->box,objectArray[j]->box,objectArray[i]->rotation,objectArray[j]->rotation)){
+                objectArray[i]->notifyCollision(*objectArray[j]);
+                objectArray[j]->notifyCollision(*objectArray[i]);
+            }
+       }
     }
 
     
@@ -86,9 +94,6 @@ void Game::render(){
 
 void Game::addObject(float mouseX,float mouseY){
     
-    int radius = 200;
-    float angle = CustomMath::DegToRad(rand() % 360);
 
-    objectArray.emplace_back(new Face(mouseX + radius*cos(angle),mouseY + radius*sin(angle)));
 }
 

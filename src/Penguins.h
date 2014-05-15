@@ -30,6 +30,8 @@ public:
     void render();
     bool isDead();
     void shoot();
+    void notifyCollision(GameObject&);
+    bool is(const std::string&);
 
     static Penguins* player;
 private:

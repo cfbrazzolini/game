@@ -20,11 +20,11 @@ void Point::setY(float y){
     this->y = y;
 }
 
-float Point::getX(){
+float Point::getX() const{
     return x;
 }
 
-float Point::getY(){
+float Point::getY() const{
     return y;
 }
 

@@ -6,9 +6,10 @@
 #include "Alien.h"
 #include "BlockTileSet.h"
 #include "Camera.h"
+#include "Colission.h"
 #include "CustomMath.h"
-#include "Face.h"
 #include "GameBase.h"
+#include "Penguins.h"
 #include "Sprite.h"
 #include "TileMap.h"
 

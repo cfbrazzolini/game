@@ -32,23 +32,23 @@ void Rect::setH(float h){
     this->h = h;
 }
 
-float Rect::getX(){
+float Rect::getX() const{
     return x;
 }
 
-float Rect::getY(){
+float Rect::getY() const{
     return y;
 }
 
-float Rect::getW(){
+float Rect::getW() const{
     return w;
 }
 
-float Rect::getH(){
+float Rect::getH() const{
     return h;
 }
 
-Point Rect::getCenter(){
+Point Rect::getCenter() const{
 
     Point center;
 

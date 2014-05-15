@@ -16,6 +16,11 @@
 #define LEFT_MOUSE_BUTTON 	SDL_BUTTON_LEFT
 #define RIGHT_MOUSE_BUTTON 	SDL_BUTTON_RIGHT
 #define X_KEY 				SDLK_x
+#define A_KEY               SDLK_a
+#define W_KEY               SDLK_w
+#define D_KEY               SDLK_d
+#define S_KEY               SDLK_s
+#define Z_KEY               SDLK_z
 
 class InputManager
 {
