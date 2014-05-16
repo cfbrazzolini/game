@@ -1,6 +1,6 @@
 #include "Alien.h"
 
-Alien::Alien(float x,float y,int nMinions) : sp("img/alien.png"){
+Alien::Alien(float x,float y,int nMinions) : sp("img/alien.png"),exploded(false){
 
 	int i;
     float angle;
@@ -97,6 +97,12 @@ void Alien::notifyCollision(GameObject& other){
 
 	if(other.is("Bullet") && ((Bullet&)other).getShooter() == "Penguins"){
 		hp -= 10;
+	}
+
+	if(!exploded && hp <= 0){
+		exploded = true;
+		Sprite explosion("img/aliendeath.png",ALIEN_DEATH_FRAME_COUNT,ALIEN_DEATH_FRAME_TIME);
+		GameBase::getInstance().addObject(new StillAnimation(box.getCenter().getX(),box.getCenter().getY(),rotation,explosion,ALIEN_DEATH_TIME_LIMIT,ALIEN_DEATH_ENDS));
 	}
 
 }

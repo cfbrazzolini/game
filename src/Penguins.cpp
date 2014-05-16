@@ -6,7 +6,8 @@ Penguins::Penguins(float x, float y) : 	bodySp("img/penguindad.png"),
 										cannonSp("img/cubngun.png"),
 										linearSpeed(0),
 										cannonAngle(0),
-										hp(50)
+										hp(50),
+										exploded(false)
 {
 
 	rotation = 0;
@@ -98,6 +99,12 @@ void Penguins::notifyCollision(GameObject& other){
 	}
 	else if(other.is("Alien")){
 		hp = 0;
+	}
+
+	if(!exploded && hp <= 0){
+		exploded = true;
+		Sprite explosion("img/penguindeath.png",PENGUINS_DEATH_FRAME_COUNT,PENGUINS_DEATH_FRAME_TIME);
+		GameBase::getInstance().addObject(new StillAnimation(box.getCenter().getX(),box.getCenter().getY(),rotation,explosion,PENGUINS_DEATH_TIME_LIMIT,PENGUINS_DEATH_ENDS));
 	}
 }
 

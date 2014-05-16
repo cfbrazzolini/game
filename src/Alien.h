@@ -9,14 +9,21 @@
 #include "Bullet.h"
 #include "Camera.h"
 #include "CustomMath.h"
+#include "GameBase.h"
 #include "GameObject.h"
 #include "InputManager.h"
 #include "Minion.h"
 #include "Point.h"
 #include "Sprite.h"
+#include "StillAnimation.h"
 
+#define ALIEN_DEATH_ENDS true
+#define ALIEN_DEATH_FRAME_COUNT 4
+#define ALIEN_DEATH_FRAME_TIME 0.2
+#define ALIEN_DEATH_TIME_LIMIT 3
 #define ALIEN_HP 50
 #define ALIEN_SPEED 100
+
 
 class Alien : public GameObject
 {
@@ -34,6 +41,7 @@ private:
 	int hp;
 	std::queue<Point> taskQueue;
 	std::vector<Minion> minionArray;
+	bool exploded;
 };
 
 #endif // ALIEN_H
