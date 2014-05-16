@@ -10,6 +10,7 @@ Game::Game() : GameBase("IDJ - Caina 09/0108094", 1024, 600), bg("img/ocean.jpg"
     Camera::follow(penguin);
 
     objectArray.emplace_back(new Alien(512,300,4));
+     objectArray.emplace_back(new Alien(800,300,6));
     objectArray.emplace_back(penguin);
 }
 

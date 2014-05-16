@@ -1,5 +1,7 @@
 #include "Alien.h"
 
+int Alien::alienCount = 0;
+
 Alien::Alien(float x,float y,int nMinions) : sp("img/alien.png"),exploded(false){
 
 	int i;
@@ -7,7 +9,9 @@ Alien::Alien(float x,float y,int nMinions) : sp("img/alien.png"),exploded(false)
 	Point click;
 
     hp = ALIEN_HP;
+    alienCount++;
     rotation = 0;
+    alienState = RESTING;
     //sp.setScale(0.5);
 
     box.setX(x - sp.getWidth()/2);
@@ -32,40 +36,54 @@ void Alien::update(float dt){
 
 	rotation -= 3;
 
-	if(input.mousePress(RIGHT_MOUSE_BUTTON)){
-		click.setX(input.getMouseX() + Camera::pos.getX());
-		click.setY(input.getMouseY() + Camera::pos.getY());
 
-		taskQueue.push(click);
+
+	if(alienState == RESTING){
+		shootCooldown.update(dt);
+
+		if(shootCooldown.getTime() >= ALIEN_SHOOT_COOLDOWN){
+			if(Penguins::player != nullptr){
+				taskQueue.push(Penguins::player->box.getCenter());
+			}
+
+			alienState = MOVING;
+		}
 	}
+	else if(alienState == MOVING){
 
-	if(input.mousePress(LEFT_MOUSE_BUTTON)){
+		if(!taskQueue.empty()){
+			pos = taskQueue.front();
 
-        click.setX((float)input.getMouseX() + Camera::pos.getX());
-        click.setY((float)input.getMouseY() + Camera::pos.getY());
+			if(box.getCenter().computeDistance(pos) < 5){
 
-        
-        for(i=0;i<minionArray.size();i++){
-            if(distance > minionArray[i].box.getCenter().computeDistance(click)){
-                distance = minionArray[i].box.getCenter().computeDistance(click);
-                closest = i;
-            }
-        }
+				taskQueue.pop();
 
-        minionArray[closest].shoot(click.getX(),click.getY());
+				if(Penguins::player != nullptr){
 
-	}
+                    click.setX(Penguins::player->box.getCenter().getX());
+                    click.setY(Penguins::player->box.getCenter().getY());
+                    
+					for(i=0;i<minionArray.size();i++){
+			            if(distance > minionArray[i].box.getCenter().computeDistance(click)){
+			                distance = minionArray[i].box.getCenter().computeDistance(click);
+			                closest = i;
+			            }
+			        }
 
-	if(!taskQueue.empty()){
-		pos = taskQueue.front();
-		if(box.getCenter().computeDistance(pos) < 5){
-			taskQueue.pop();
-		}else{
+	        		minionArray[closest].shoot(click.getX(),click.getY());
+        		}
 
-			speed = pos.sub(box.getCenter());
-			speed = speed.vectorNormalize().vectorXScalar(ALIEN_SPEED*dt);
+        		shootCooldown.restart();
+        		alienState = RESTING;
 
-			box.sumPoint(speed);
+
+			}else{
+
+				speed = pos.sub(box.getCenter());
+				speed = speed.vectorNormalize().vectorXScalar(ALIEN_SPEED*dt);
+
+				box.sumPoint(speed);
+			}
 		}
 	}
 
@@ -90,7 +108,7 @@ bool Alien::isDead(){
 }
 
 Alien::~Alien(){
-	
+	alienCount--;
 }
 
 void Alien::notifyCollision(GameObject& other){

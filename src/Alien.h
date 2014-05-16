@@ -13,6 +13,7 @@
 #include "GameObject.h"
 #include "InputManager.h"
 #include "Minion.h"
+#include "Penguins.h"
 #include "Point.h"
 #include "Sprite.h"
 #include "StillAnimation.h"
@@ -22,6 +23,7 @@
 #define ALIEN_DEATH_FRAME_TIME 0.2
 #define ALIEN_DEATH_TIME_LIMIT 3
 #define ALIEN_HP 50
+#define ALIEN_SHOOT_COOLDOWN 3
 #define ALIEN_SPEED 100
 
 
@@ -35,6 +37,8 @@ public:
 	bool isDead();
 	void notifyCollision(GameObject&);
 	bool is(const std::string&);
+
+	static int alienCount;
 private:
 	Sprite sp;
 	Point speed;
@@ -42,6 +46,9 @@ private:
 	std::queue<Point> taskQueue;
 	std::vector<Minion> minionArray;
 	bool exploded;
+    enum AlienState {MOVING,RESTING};
+	AlienState alienState;
+	Timer shootCooldown;
 };
 
 #endif // ALIEN_H
