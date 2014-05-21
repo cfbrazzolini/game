@@ -36,7 +36,7 @@ void Minion::shoot(float x,float y){
 	float angle;
 	int radius = 40;
 	Point target,bullet_origin;
-	auto &game = GameBase::getInstance();
+	auto &game = Game::getInstance();
 
     target.setX(x - box.getCenter().getX());
     target.setY(y - box.getCenter().getY());
@@ -47,7 +47,7 @@ void Minion::shoot(float x,float y){
     bullet_origin.setY(box.getCenter().getY() + radius*sin(angle));
 
     Bullet* bullet = new Bullet(bullet_origin.getX(),bullet_origin.getY(),angle,MINION_BULLET_SPEED,MINION_BULLET_RANGE,"img/minionbullet.png",MINION_BULLET_FRAME_COUNT,MINION_BULLET_FRAME_TIME,"Minion");
-    game.addObject(bullet);
+    game.getCurrentState().addObject(bullet);
 }
 
 void Minion::notifyCollision(GameObject& other){

@@ -32,7 +32,7 @@ Sprite::~Sprite(){
 void Sprite::open(const std::string& file){
 
     if(assetTable.find(file) == assetTable.end()){
-        if((texture=IMG_LoadTexture(GameBase::getInstance().getRenderer(), file.c_str()))==nullptr){
+        if((texture=IMG_LoadTexture(Game::getInstance().getRenderer(), file.c_str()))==nullptr){
             printf("nao foi possivel carregar a texture %s\n", file.c_str());
             printf("%s\n",SDL_GetError());
             return;
@@ -79,7 +79,7 @@ void Sprite::render(int x, int y,float angle){
     dstRect.w = clipRect.w*scaleX;
     dstRect.h = clipRect.h*scaleY;
 
-    SDL_RenderCopyEx(GameBase::getInstance().getRenderer(), texture, &clipRect, &dstRect,angle,NULL,SDL_FLIP_NONE);
+    SDL_RenderCopyEx(Game::getInstance().getRenderer(), texture, &clipRect, &dstRect,angle,NULL,SDL_FLIP_NONE);
 }
 
 int Sprite::getWidth(){

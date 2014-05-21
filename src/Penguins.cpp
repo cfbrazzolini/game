@@ -88,7 +88,7 @@ bool Penguins::isDead(){
 void Penguins::shoot(){
     int radius = 60;
 	Point bullet_origin(box.getCenter().getX() + radius*cos(cannonAngle),box.getCenter().getY() + radius*sin(cannonAngle));
-    GameBase::getInstance().addObject(new Bullet(bullet_origin.getX(),bullet_origin.getY(),cannonAngle,PENGUINS_BULLET_SPEED,PENGUINS_BULLET_RANGE,"img/penguinshot.png",PENGUINS_BULLET_FRAME_COUNT,PENGUINS_BULLET_FRAME_TIME,"Penguins"));
+    Game::getInstance().getCurrentState().addObject(new Bullet(bullet_origin.getX(),bullet_origin.getY(),cannonAngle,PENGUINS_BULLET_SPEED,PENGUINS_BULLET_RANGE,"img/penguinshot.png",PENGUINS_BULLET_FRAME_COUNT,PENGUINS_BULLET_FRAME_TIME,"Penguins"));
 }
 
 
@@ -104,7 +104,7 @@ void Penguins::notifyCollision(GameObject& other){
 	if(!exploded && hp <= 0){
 		exploded = true;
 		Sprite explosion("img/penguindeath.png",PENGUINS_DEATH_FRAME_COUNT,PENGUINS_DEATH_FRAME_TIME);
-		GameBase::getInstance().addObject(new StillAnimation(box.getCenter().getX(),box.getCenter().getY(),rotation,explosion,PENGUINS_DEATH_TIME_LIMIT,PENGUINS_DEATH_ENDS));
+        Game::getInstance().getCurrentState().addObject(new StillAnimation(box.getCenter().getX(),box.getCenter().getY(),rotation,explosion,PENGUINS_DEATH_TIME_LIMIT,PENGUINS_DEATH_ENDS));
 	}
 }
 

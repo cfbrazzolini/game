@@ -9,7 +9,7 @@
 #include "Bullet.h"
 #include "Camera.h"
 #include "CustomMath.h"
-#include "GameBase.h"
+#include "Game.h"
 #include "GameObject.h"
 #include "InputManager.h"
 #include "Minion.h"

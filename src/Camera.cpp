@@ -17,7 +17,7 @@ void Camera::update(float dt){
 
 	if(focus != nullptr){
 
-		auto& game = GameBase::getInstance();
+		auto& game = Game::getInstance();
 
 		pos.setX(focus->box.getCenter().getX() - game.getWindowWidth()/2);
 		pos.setY(focus->box.getCenter().getY() - game.getWindowHeight()/2);

@@ -7,7 +7,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "GameBase.h"
+#include "Game.h"
 
 
 class Sprite{

@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "GameBase.h"
+#include "Game.h"
 #include "GameObject.h"
 #include "Point.h"
 

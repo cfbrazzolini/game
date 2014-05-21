@@ -1,100 +1,106 @@
 #include "Game.h"
 
+Game* Game::instance = nullptr;
+
+std::stack<std::unique_ptr<State>> Game::stateStack;
 
 
-Game::Game() : GameBase("IDJ - Caina 09/0108094", 1024, 600), bg("img/ocean.jpg"),tileSet(64,64,"img/tileset.png"),tileMap("map/tileMap.txt",&tileSet) {
+Game::Game(const std::string& title, int width, int height){
 
-    Penguins* penguin = new Penguins(512,600);
-
-
-    Camera::follow(penguin);
-
-    objectArray.emplace_back(new Alien(512,300,4));
-     objectArray.emplace_back(new Alien(800,300,6));
-    objectArray.emplace_back(penguin);
+    frameStart = 0;
+    storedState = nullptr;
+    srand(time(NULL));
+    
+    if(instance != nullptr){
+        throw "Erro! Ja foi criado instance, chame esse construtor somente 1 vez";
+    }
+    else
+        instance = this;
+    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)!=0){
+        throw "erro ao inicializar a biblioteca SDL";
+    }
+    if(IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF)!=(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF)){
+        throw "erro ao carregar a biblioteca IMG_Init";
+    }
+    if((window = SDL_CreateWindow(title.c_str(), 100,100, width, height, 0)) == nullptr){
+        throw "nao abriu janela!";
+    }
+    if((renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED)) == nullptr){
+        throw "nao criou renderer";
+    }
 }
 
 Game::~Game(){
-    Sprite::clear();
-    objectArray.clear();
+    IMG_Quit();
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+    instance = nullptr;
+    storedState = nullptr;
 }
 
-
-void Game::input() {
-    
+SDL_Renderer* Game::getRenderer(){
+     return renderer;
 }
 
-void Game::update(){
+Game& Game::getInstance(){
+    return *instance;
+}
 
-    int i,j;
-    auto &input = InputManager::getInstance();
-    int mouseX = InputManager::getInstance().getMouseX();
-    int mouseY = InputManager::getInstance().getMouseY();
-    float dt = GameBase::getDeltaTime();
+State& Game::getCurrentState(){
+    return *(stateStack.top());
+}
 
-    if(Penguins::player == nullptr){
-        Camera::unfollow();
-    }
+void Game::push(State* state){
+    //stateStack.push(storedState);
+    storedState = state;
+}
 
-    Camera::update(dt);
-    
-    if(input.keyPress(ESCAPE_KEY) || input.shouldQuit()){
-        shouldQuit = true;
-    }
+void Game::run(){
 
-    if(input.keyPress(SPACE_KEY)){
+    stateStack.emplace(storedState);
+    storedState = nullptr;
 
-        addObject((float)mouseX + Camera::pos.getX(), (float)mouseY + Camera::pos.getY());
-    }
+    while(!stateStack.top()->requestedQuit()){
+        calculateDeltaTime();
+        InputManager::getInstance().update();
 
-    if (input.isKeyDown(X_KEY)) {
-        objectArray.clear();
-    }
-
-
-    for(i=0;i<objectArray.size();i++){
-            objectArray[i]->update(dt);
-    }
-
-    for(i = 0; i < objectArray.size(); i++) {
-       for (j = i; j < objectArray.size(); j++)       {
-            if(Collision::IsColliding(objectArray[i]->box,objectArray[j]->box,objectArray[i]->rotation,objectArray[j]->rotation)){
-                objectArray[i]->notifyCollision(*objectArray[j]);
-                objectArray[j]->notifyCollision(*objectArray[i]);
+        if(stateStack.top()->requestedDelete()){
+            stateStack.pop();
+            if(storedState != nullptr){
+                stateStack.emplace(storedState);
+            }else{
+                break;
             }
-       }
-    }
-
-    
-
-    for(i=0;i<objectArray.size();i++){
-        if(objectArray[i]->isDead()){
-            objectArray.erase(objectArray.begin()+i);
         }
-    }
 
+        stateStack.top()->update(dt);
+        stateStack.top()->render();
+        SDL_RenderPresent(renderer);
+        SDL_Delay(33);
+    }
 
 }
 
-void Game::render(){
-
-    int i;
-
-
-    bg.render(0,0);
-
-    for(i=0;i<tileMap.getDepth();i++){
-         tileMap.renderLayer(i,(i+1)*Camera::pos.getX(),(i+1)*Camera::pos.getY());
-    }
-
-    for(i=0;i<objectArray.size();i++){
-        objectArray[i]->render();
-    }
+void Game::calculateDeltaTime(){
+    int ticks = SDL_GetTicks();
+    dt = (float)(ticks - frameStart)/1000;
+    frameStart = ticks;
 }
 
 
-void Game::addObject(float mouseX,float mouseY){
+int Game::getWindowWidth(){
+
+    int w, h;
+
+    SDL_GetWindowSize(window, &w, &h);
+    return w;
+}
+
+int Game::getWindowHeight(){
+
+    int w, h;
     
-
+    SDL_GetWindowSize(window, &w, &h);
+    return h;
 }
-

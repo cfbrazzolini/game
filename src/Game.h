@@ -1,31 +1,38 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <fstream>
+#include <ctime>
+#include <memory>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <stack>
+#include <string>
 
-#include "Alien.h"
-#include "BlockTileSet.h"
-#include "Camera.h"
-#include "Colission.h"
-#include "CustomMath.h"
-#include "GameBase.h"
-#include "Penguins.h"
-#include "Sprite.h"
-#include "TileMap.h"
+#include "GameObject.h"
+#include "InputManager.h"
+#include "State.h"
 
-class Game : public GameBase {
+class Game
+{
 public:
-    Game();
+    Game(const std::string&,int,int);
     ~Game();
+    SDL_Renderer* getRenderer();
+    static Game& getInstance();
+    static State& getCurrentState();
+    void push(State*);
+    void run();
+    int getWindowWidth();
+    int getWindowHeight();
 private:
-    void input();
-    void update();
-    void render();
-    void addObject(float,float);
-
-    Sprite bg;
-    BlockTileSet tileSet;
-    TileMap tileMap;
+	void calculateDeltaTime();
+	int frameStart;
+	float dt;
+	static Game* instance;
+	State* storedState;
+	SDL_Window* window;
+	SDL_Renderer* renderer;
+	static std::stack<std::unique_ptr<State>> stateStack;
 };
 
 #endif // GAME_H
