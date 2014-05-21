@@ -36,10 +36,15 @@ Game::Game(const std::string& title, int width, int height){
         throw "erro na Mix_OpenAudio";
     }
 
+    if(TTF_Init() != 0){
+         throw "erro na TTF_Init";
+    }
+
 }
 
 Game::~Game(){
     IMG_Quit();
+    TTF_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
