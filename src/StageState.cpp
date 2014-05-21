@@ -14,7 +14,7 @@ StageState::StageState() : bg("img/ocean.jpg"),tileSet(64,64,"img/tileset.png"),
 }
 
 StageState::~StageState(){
-    Sprite::clear();
+    //Sprite::clear();
     objectArray.clear();
 }
 
@@ -38,13 +38,10 @@ void StageState::update(float dt){
     Camera::update(dt);
     
     if(input.keyPress(ESCAPE_KEY) || input.shouldQuit()){
-        hasRequestedQuit = true;
+        hasRequestedDelete = true;
+
     }
 
-    if(input.keyPress(SPACE_KEY)){
-
-        //addObject((float)mouseX + Camera::pos.getX(), (float)mouseY + Camera::pos.getY());
-    }
 
     if (input.isKeyDown(X_KEY)) {
         objectArray.clear();

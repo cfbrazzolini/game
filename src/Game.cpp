@@ -61,16 +61,26 @@ void Game::run(){
     stateStack.emplace(storedState);
     storedState = nullptr;
 
+
     while(!stateStack.top()->requestedQuit()){
         calculateDeltaTime();
         InputManager::getInstance().update();
+
+        if(storedState != nullptr){
+            stateStack.emplace(storedState);
+            storedState = nullptr;
+        }
 
         if(stateStack.top()->requestedDelete()){
             stateStack.pop();
             if(storedState != nullptr){
                 stateStack.emplace(storedState);
-            }else{
+            }
+
+            if(stateStack.top() == nullptr){
                 break;
+            }else{
+                //break;
             }
         }
 
