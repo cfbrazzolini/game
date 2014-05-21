@@ -5,13 +5,15 @@
 
 #include "Camera.h"
 #include "GameObject.h"
+#include "Sound.h"
 #include "Sprite.h"
 #include "Timer.h"
 
 class StillAnimation : public GameObject
 {
 public:
-    StillAnimation(float,float,float,Sprite,float,bool);
+    StillAnimation(float,float,float,Sprite,float,bool,Sound);
+    ~StillAnimation();
     void update(float);
     void render();
     bool isDead();
@@ -22,6 +24,7 @@ private:
 	float timeLimit;
 	bool oneTimeOnly;
 	Sprite sp;
+    Sound sound;
 
 };
 

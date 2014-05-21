@@ -1,12 +1,13 @@
 #include "StageState.h"
 
 
-StageState::StageState() : bg("img/ocean.jpg"),tileSet(64,64,"img/tileset.png"),tileMap("map/tileMap.txt",&tileSet) {
+StageState::StageState() : bg("img/ocean.jpg"),tileSet(64,64,"img/tileset.png"),tileMap("map/tileMap.txt",&tileSet),music("audio/stageState.ogg") {
 
     Penguins* penguin = new Penguins(512,600);
 
 
     Camera::follow(penguin);
+    music.play(-1);
 
     objectArray.emplace_back(new Alien(512,300,4));
     objectArray.emplace_back(new Alien(800,300,6));
@@ -15,6 +16,8 @@ StageState::StageState() : bg("img/ocean.jpg"),tileSet(64,64,"img/tileset.png"),
 
 StageState::~StageState(){
     //Sprite::clear();
+    music.stop();
+    Music::clear();
     objectArray.clear();
 }
 

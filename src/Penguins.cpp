@@ -103,8 +103,9 @@ void Penguins::notifyCollision(GameObject& other){
 
 	if(!exploded && hp <= 0){
 		exploded = true;
+		Sound sound("audio/boom.wav");
 		Sprite explosion("img/penguindeath.png",PENGUINS_DEATH_FRAME_COUNT,PENGUINS_DEATH_FRAME_TIME);
-        Game::getInstance().getCurrentState().addObject(new StillAnimation(box.getCenter().getX(),box.getCenter().getY(),rotation,explosion,PENGUINS_DEATH_TIME_LIMIT,PENGUINS_DEATH_ENDS));
+        Game::getInstance().getCurrentState().addObject(new StillAnimation(box.getCenter().getX(),box.getCenter().getY(),rotation,explosion,PENGUINS_DEATH_TIME_LIMIT,PENGUINS_DEATH_ENDS,sound));
 	}
 }
 

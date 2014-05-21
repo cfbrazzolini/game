@@ -9,6 +9,7 @@
 #include "Colission.h"
 #include "CustomMath.h"
 #include "Game.h"
+#include "Music.h"
 #include "Penguins.h"
 #include "Sprite.h"
 #include "State.h"
@@ -27,6 +28,7 @@ private:
 	Sprite bg;
 	BlockTileSet tileSet;
 	TileMap tileMap;
+    Music music;
 };
 
 #endif // STAGESTATE_H

@@ -15,6 +15,7 @@
 #include "Minion.h"
 #include "Penguins.h"
 #include "Point.h"
+#include "Sound.h"
 #include "Sprite.h"
 #include "StillAnimation.h"
 

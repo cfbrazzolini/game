@@ -119,8 +119,9 @@ void Alien::notifyCollision(GameObject& other){
 
 	if(!exploded && hp <= 0){
 		exploded = true;
+		Sound sound("audio/boom.wav");
 		Sprite explosion("img/aliendeath.png",ALIEN_DEATH_FRAME_COUNT,ALIEN_DEATH_FRAME_TIME);
-		Game::getCurrentState().addObject(new StillAnimation(box.getCenter().getX(),box.getCenter().getY(),rotation,explosion,ALIEN_DEATH_TIME_LIMIT,ALIEN_DEATH_ENDS));
+		Game::getCurrentState().addObject(new StillAnimation(box.getCenter().getX(),box.getCenter().getY(),rotation,explosion,ALIEN_DEATH_TIME_LIMIT,ALIEN_DEATH_ENDS,sound));
 	}
 
 }

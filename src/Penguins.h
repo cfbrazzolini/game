@@ -8,6 +8,7 @@
 #include "GameObject.h"
 #include "InputManager.h"
 #include "Point.h"
+#include "Sound.h"
 #include "Sprite.h"
 #include "StillAnimation.h"
 #include "Timer.h"

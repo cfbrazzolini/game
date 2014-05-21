@@ -1,9 +1,10 @@
 #include "StillAnimation.h"
 
-StillAnimation::StillAnimation(float x,float y,float rotation,Sprite sp,float timeLimit, bool ends) : 	sp(sp),
-																										timeLimit(timeLimit),
-																										endTimer(),
-																										oneTimeOnly(ends)
+StillAnimation::StillAnimation(float x,float y,float rotation,Sprite sp,float timeLimit, bool ends, Sound sound) : 	sp(sp),
+																													timeLimit(timeLimit),
+																													endTimer(),
+																													oneTimeOnly(ends),
+																													sound(sound)
 {
 
 	this->rotation = rotation;
@@ -11,6 +12,12 @@ StillAnimation::StillAnimation(float x,float y,float rotation,Sprite sp,float ti
 	box.setY(y - sp.getHeight()/2);
 	box.setW(sp.getWidth());
 	box.setH(sp.getHeight());
+
+	sound.play(0);
+}
+
+StillAnimation::~StillAnimation(){
+
 }
 
 

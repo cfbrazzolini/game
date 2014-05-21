@@ -28,6 +28,14 @@ Game::Game(const std::string& title, int width, int height){
     if((renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED)) == nullptr){
         throw "nao criou renderer";
     }
+
+    if(Mix_Init(MIX_INIT_OGG) != (MIX_INIT_OGG)){
+        throw "erro ao carregar biblioteca MIX_Init";
+    }
+    if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY,MIX_DEFAULT_FORMAT,MIX_DEFAULT_CHANNELS,1024) != 0){
+        throw "erro na Mix_OpenAudio";
+    }
+
 }
 
 Game::~Game(){
