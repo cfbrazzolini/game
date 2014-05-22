@@ -45,6 +45,8 @@ Game::Game(const std::string& title, int width, int height){
 Game::~Game(){
     IMG_Quit();
     TTF_Quit();
+    Mix_CloseAudio();
+    Mix_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -75,7 +77,7 @@ void Game::run(){
     storedState = nullptr;
 
 
-    while(!stateStack.top()->requestedQuit()){
+    while(!stateStack.empty() && !stateStack.top()->requestedQuit()){
         calculateDeltaTime();
         InputManager::getInstance().update();
 
@@ -84,16 +86,17 @@ void Game::run(){
             storedState = nullptr;
         }
 
-        if(stateStack.top()->requestedDelete()){
+        while(stateStack.top()->requestedDelete()){
+            
             stateStack.pop();
+
             if(storedState != nullptr){
                 stateStack.emplace(storedState);
+                storedState = nullptr;
             }
 
-            if(stateStack.top() == nullptr){
+            if(stateStack.empty()){
                 break;
-            }else{
-                //break;
             }
         }
 

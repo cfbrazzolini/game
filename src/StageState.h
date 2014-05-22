@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Colission.h"
 #include "CustomMath.h"
+#include "EndState.h"
 #include "Game.h"
 #include "Music.h"
 #include "Penguins.h"
